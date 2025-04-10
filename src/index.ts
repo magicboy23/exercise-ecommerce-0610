@@ -12,6 +12,6 @@ app.use(express.json());
 app.use("/samples", sampleRouter);
 app.use(errorMiddleware);
 
-app.listen(PORT, () => {
-  console.log(`Server running on PORT : ${PORT}`);
+app.listen(8000, () => {
+  console.log(`Server running on PORT : ${8000}`);
 });
