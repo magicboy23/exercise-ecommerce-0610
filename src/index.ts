@@ -15,6 +15,6 @@ app.use("/auth", authRouter);
 
 app.use(errorMiddleware);
 
-app.listen(8000, () => {
-  console.log(`Server running on PORT : ${8000}`);
+app.listen(PORT, () => {
+  console.log(`Server running on PORT : ${PORT}`);
 });
