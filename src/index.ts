@@ -4,7 +4,7 @@ import cors from "cors";
 import sampleRouter from "./routes/sample.router";
 import { PORT } from "./config/env";
 import authRouter from "./routes/auth.router";
-
+import productRouter from "./routes/product.router";
 const app = express();
 
 app.use(cors());
@@ -12,6 +12,7 @@ app.use(express.json());
 
 app.use("/samples", sampleRouter);
 app.use("/auth", authRouter);
+app.use("/product", productRouter);
 
 app.use(errorMiddleware);
 
