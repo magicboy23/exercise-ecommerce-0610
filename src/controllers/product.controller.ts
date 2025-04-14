@@ -10,7 +10,9 @@ export const createProductController = async (
   next: NextFunction
 ) => {
   try {
-    const result = await createProductService(req.body);
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+    const thumbnail = files.thumbnail?.[0];
+    const result = await createProductService(req.body, thumbnail);
     res.status(200).send(result);
   } catch (error) {
     next(error);
@@ -65,7 +67,11 @@ export const deleteProductController = async (
   next: NextFunction
 ) => {
   try {
-    const result = await deleteProductService(Number(req.params.id));
+    const authUserId = res.locals.user.id;
+    const result = await deleteProductService(
+      Number(req.params.id),
+      authUserId
+    );
     res.status(200).send(result);
   } catch (error) {
     next(error);
