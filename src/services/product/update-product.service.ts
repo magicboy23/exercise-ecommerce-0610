@@ -1,13 +1,14 @@
 import { Product } from "@prisma/client";
 import { ApiError } from "../../utils/api-error";
 import prisma from "../../config/prisma";
+import { generateSlug } from "../../utils/generateSlug";
 
 export const updateProductService = async (
   id: number,
   body: Partial<Product>
 ) => {
   const product = await prisma.product.findFirst({
-    where: { id },
+    where: { id, deletedAt: null },
   });
 
   if (!product) {
@@ -17,9 +18,12 @@ export const updateProductService = async (
     const existingProduct = await prisma.product.findFirst({
       where: { name: body.name },
     });
+
     if (existingProduct) {
       throw new ApiError("Product name already exist", 400);
     }
+
+    body.slug = generateSlug(body.name);
   }
 
   return await prisma.product.update({
